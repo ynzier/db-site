@@ -1,0 +1,64 @@
+.wrap-pdf{
+  position:absolute;
+  
+  zoom: 1.5;
+}
+.pdf-page {
+  position: relative;
+  margin: 0 auto;
+  padding: .4in .3in;
+  color: #333;
+  background-color: #fff;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,.3);
+  box-sizing: border-box;
+  padding: 0 0 0 0;
+  letter-spacing: 2px;
+}
+.box {
+  margin: 20px;
+  
+}
+.size-a5 {
+  width: 596px;
+  height: 420px;
+  background-image: url('../assets/cardform.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index:-1;
+}
+.model-id{
+  width: 250px;
+  margin-left: 380px;
+  padding-top: 145px;
+  font-size: 7px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.serial-id{
+  width: 150px;
+  margin-left: 370px;
+  font-size: 7px;
+  font-weight: 600;
+  margin-right: 80px;
+  text-align: center;
+  padding-top: 0px;
+  z-index: 2;
+}
+.purchase-date{
+  margin-left: 350px;
+  margin-right:90px;
+  text-align: center;
+  font-size: 7px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  margin-top: 25px;
+}
+.expired-date{
+  margin-left: 350px;
+  margin-right:90px;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 7px;
+  font-weight: 600;
+
+}
