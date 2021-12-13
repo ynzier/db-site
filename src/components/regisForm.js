@@ -23,6 +23,8 @@ export const RegisterForm = () => {
     lastName: '',
     email: '',
     phone: '',
+    billing_addr: '',
+    shipping_addr: '',
   };
 
   const [modalShow, setModalShow] = useState(false);
@@ -75,6 +77,8 @@ export const RegisterForm = () => {
       lastName: record.lastName,
       email: record.email,
       phone: record.phone,
+      billing_addr: record.billing_addr,
+      shipping_addr: record.shipping_addr,
     };
     AuthService.register(data)
       .then(response => {
@@ -207,6 +211,36 @@ export const RegisterForm = () => {
                   type="email"
                   placeholder="e-mail"
                   name="email"
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={10} className="mb-3">
+              <Form.Group id="address">
+                <Form.Label>ที่อยู่สำหรับใบสั่งซื้อ</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="ที่อยู่"
+                  style={{ resize: 'none' }}
+                  name="billing_addr"
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={10} className="mb-3">
+              <Form.Group id="address">
+                <Form.Label>ที่อยู่สำหรับจัดส่ง</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="ที่อยู่"
+                  style={{ resize: 'none' }}
+                  name="shipping_addr"
                   onChange={handleInputChange}
                 />
               </Form.Group>

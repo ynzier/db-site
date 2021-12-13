@@ -15,7 +15,7 @@ const EditProfile = props => {
   const [email, setemail] = useState('');
   const [phone, setphone] = useState();
   const [billingAddr, setbillingAddr] = useState('');
-
+  const [shippingAddr, setShippingAddr] = useState('');
 
   const [status, setStatus] = useState(0);
 
@@ -32,7 +32,8 @@ const EditProfile = props => {
           setlastName(res.data.lastName);
           setemail(res.data.email);
           setphone(res.data.phone);
-          setbillingAddr(res.data.billing_addr)
+          setbillingAddr(res.data.billing_addr);
+          setShippingAddr(res.data.shipping_addr);
         }
       })
       .catch(e => {
@@ -55,7 +56,7 @@ const EditProfile = props => {
       email: email,
       phone: phone,
       billing_addr: billingAddr,
-      shipping_addr: billingAddr,
+      shipping_addr: shippingAddr,
     };
     CustomerService.update(
       JSON.parse(localStorage.getItem('user')).custNo,
@@ -124,7 +125,7 @@ const EditProfile = props => {
               </Form.Group>
             </Col>
           </Row>
-        
+
           <Row>
             <Col md={6} className="mb-3">
               <Form.Group id="phone">
@@ -158,7 +159,7 @@ const EditProfile = props => {
           <Row>
             <Col sm={10} className="mb-3">
               <Form.Group id="address">
-                <Form.Label>ที่อยู่</Form.Label>
+                <Form.Label>ที่อยู่สำหรับใบสั่งซื้อ</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
@@ -168,6 +169,24 @@ const EditProfile = props => {
                   defaultValue={billingAddr}
                   onChange={e => {
                     setbillingAddr(e.target.value);
+                  }}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={10} className="mb-3">
+              <Form.Group id="address">
+                <Form.Label>ที่อยู่สำหรับจัดส่ง</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="ที่อยู่"
+                  style={{ resize: 'none' }}
+                  name="description"
+                  defaultValue={shippingAddr}
+                  onChange={e => {
+                    setShippingAddr(e.target.value);
                   }}
                 />
               </Form.Group>

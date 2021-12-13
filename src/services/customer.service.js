@@ -9,7 +9,13 @@ const create = data => {
     },
   });
 };
-
+const getTransaction = id => {
+  return http.get('/getTransaction/' + id, {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+};
 const getAll = () => {
   return http.get('/getData', {
     headers: {
@@ -44,8 +50,27 @@ const getFreeTransID = () => {
     },
   });
 };
-const createTransaction = data => {
-  return http.post('/transaction', data, {
+const createTransaction = (data, total) => {
+  return http.post(
+    '/transaction',
+    { data, total },
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    },
+  );
+};
+const getAllReceipts = (id) => {
+  return http.get(`/getAllReceipts/${id}`, {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+};
+
+const checkPayment = (id, data) => {
+  return http.get(`/checkPayment/${id}`, {
     headers: {
       'Content-type': 'application/json',
     },
@@ -61,4 +86,7 @@ export default {
   getCustomerDetail,
   createTransaction,
   getFreeTransID,
+  getAllReceipts,
+  checkPayment,
+  getTransaction,
 };

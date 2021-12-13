@@ -21,6 +21,8 @@ const App = props => {
   const [record, setRecord] = useState([]);
   const [productData, setProductData] = useState([]);
   const [modalShow, setModalShow] = useState(false);
+
+  const [typeData, setTypeData] = useState([]);
   const [filterData, setfilterData] = useState();
   const [inputCount, setInputCount] = useState(1);
   const search = value => {
@@ -32,6 +34,14 @@ const App = props => {
 
     setfilterData(filterTable);
   };
+
+  const getFilter= value => {
+    console.log(value)
+    // eslint-disable-next-line eqeqeq
+    var filterTable = record.filter(record => record.prod_type == value);
+    setfilterData(filterTable);
+  };
+
   const MyVerticallyCenteredModal = props => {
     return (
       <Modal {...props} size="xl">
@@ -125,6 +135,24 @@ const App = props => {
       .catch(e => {
         console.log(e);
       });
+
+    ProductService.getProductType()
+      .then(res => {
+        if (mounted) {
+          var getData;
+          getData = res.data;
+          setTypeData(getData);
+        }
+      })
+      .catch(error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        alert(resMessage);
+      });
     return () => (mounted = false);
   }, []);
 
@@ -158,6 +186,18 @@ const App = props => {
                   />
                 </InputGroup>
               </Col>
+              <Col md={4} className="mb-3">
+                <InputGroup>
+                  <Form.Select onChange={e => getFilter(e.target.value)}>
+                    <option>Select a Product type</option>
+                    {typeData.map(option => (
+                      <option key={option.prod_type} value={option.prod_type}>
+                        {option.category}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </InputGroup>
+              </Col>
             </Row>
           </div>
         </Card.Header>
@@ -167,57 +207,55 @@ const App = props => {
           <List
             grid={{ gutter: 16, column: 4 }}
             dataSource={filterData == null ? record : filterData}
-            renderItem={item => (
-              <List.Item>
-                <CardAnt title={item.prod_name}>
-                  <img
-                    src={`data:image/jpeg;base64,${item.image}`}
-                    alt=""
-                    style={{
-                      border: '1px solid #ddd',
-                      'border-radius': '4px',
-                      padding: '5px',
-                      width: '100%',
-                    }}
-                    onClick={() => {
-                      openRecord(item.prod_id);
-                    }}
-                  />
-                  <div
-                    style={{
-                      'white-space': 'nowrap',
-                      overflow: 'hidden',
-                      'text-overflow': 'ellipsis',
-                    }}>
-                    {item.description}
-                  </div>
-                  <div>จำนวนสินค้าคงเหลือ {item.stock} ชิ้น</div>
-                  <div style={{ color: 'red', fontWeight: 'bold' }}>
-                    <NumberFormat
-                      value={item.price}
-                      decimalScale={2}
-                      fixedDecimalScale={true}
-                      decimalSeparator="."
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'฿'}
-                    />
-                  </div>
-                  <div>
-                    <span
+            renderItem={item =>
+              item.stock > 0 && (
+                <List.Item>
+                  <CardAnt title={item.prod_name}>
+                    <img
+                      src={`data:image/jpeg;base64,${item.image}`}
+                      alt=""
+                      style={{
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        padding: '5px',
+                        width: '100%',
+                      }}
                       onClick={() => {
                         openRecord(item.prod_id);
+                      }}
+                    />
+                    <div
+                      style={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
                       }}>
-                      <i className="fas fa-info-circle action mr-2"></i>
-                    </span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span onClick={() => {}}>
-                      <i className="fas fa-shopping-cart action"></i>
-                    </span>
-                  </div>
-                </CardAnt>
-              </List.Item>
-            )}
+                      {item.description}
+                    </div>
+                    <div>จำนวนสินค้าคงเหลือ {item.stock} ชิ้น</div>
+                    <div style={{ color: 'red', fontWeight: 'bold' }}>
+                      <NumberFormat
+                        value={item.price}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        decimalSeparator="."
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'฿'}
+                      />
+                    </div>
+                    <div>
+                      <span
+                        onClick={() => {
+                          openRecord(item.prod_id);
+                        }}>
+                        <i className="fas fa-info-circle action mr-2"></i>
+                      </span>
+                    </div>
+                  </CardAnt>
+                </List.Item>
+              )
+            }
           />
         </Card.Body>
       </Card>

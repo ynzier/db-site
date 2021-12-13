@@ -26,9 +26,6 @@ import {
 import { Link } from 'react-router-dom';
 
 import { Routes } from '../routes';
-import ReactHero from '../assets/img/technologies/react-hero-logo.svg';
-import ProfilePicture from '../assets/img/team/icon.png';
-
 import AuthService from '../services/auth.service';
 
 export default (props = {}) => {
@@ -131,9 +128,6 @@ export default (props = {}) => {
         collapseOnSelect
         variant="dark"
         className="navbar-theme-primary px-4 d-md-none">
-        <Navbar.Brand className="me-lg-5" as={Link} to={Routes.Dashboard.path}>
-          <Image src={ReactHero} className="navbar-brand-light" />
-        </Navbar.Brand>
         <Navbar.Toggle
           as={Button}
           aria-controls="main-navbar"
@@ -148,10 +142,6 @@ export default (props = {}) => {
             <div className="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
               <div className="d-flex align-items-center">
                 <div className="user-avatar lg-avatar me-4">
-                  <Image
-                    src={ProfilePicture}
-                    className="card-img-top rounded-circle border-white"
-                  />
                 </div>
                 <div className="d-block">
                   <h6>Hello !</h6>
@@ -183,7 +173,7 @@ export default (props = {}) => {
                 icon={faShoppingCart}
                 link={Routes.Cart.path}
               />
-              <NavItem title="ประวัติการสั่งซื้อ" icon={faHistory} />
+              <NavItem title="ประวัติการสั่งซื้อ" icon={faHistory} link={Routes.Receipts.path}/>
               {currentUser != null ? (
                 <Button
                   variant="primary"
